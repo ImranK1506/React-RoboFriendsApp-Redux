@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## React - RoboFriends App
+## React + Redux - RoboFriends App
 
 In this project we create some card components with data obtained from an API. This project was setup to play around with React.
 
