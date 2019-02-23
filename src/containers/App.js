@@ -7,45 +7,38 @@ import ErrorBoundary from '../components/ErrorBoundary'
 // import { robots } from "./robots";
 import './App.css'
 
-import { setSearchField } from "../action";
+import { setSearchField, requestRobots } from "../action";
 
 const mapStateToProps = state => {
    return {
-      searchField: state.searchField
+      searchField: state.searchRobots.searchField,
+      robots: state.requestRobots.robots,
+      isPending: state.requestRobots.isPending,
+      error: state.requestRobots.error
    }
 };
 
 const mapDispatchToProps = (dispatch) => {
    return {
-      onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+      onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+      onRequestRobots: () => dispatch(requestRobots())
    }
 };
 
 class App extends Component {
-   constructor() {
-      super()
-      this.state = {
-         robots: []
-      };
-      console.log('The Constructor is triggered at first');
-   }
-
    componentDidMount() {
       // Grabbing data from local json
       // this.setState({ robots: robots })
 
-      // Grabbing data from API
-      fetch('https://jsonplaceholder.typicode.com/users')
-          .then(response => response.json())
-          .then(users => this.setState({robots: users}));
+      // Fetch data from API and error handling
+      this.props.onRequestRobots();
       // Test Loading if response had delay
       // .then(users => {});
       console.log('The componentDidMount is triggered as last');
    }
 
    render() {
-      const { robots } = this.state;
-      const { searchField, onSearchChange } = this.props;
+      const { searchField, onSearchChange, robots, isPending } = this.props;
       // filter per robot
       const filteredRobots = robots.filter(robot => {
          return robot.name
@@ -55,7 +48,7 @@ class App extends Component {
       });
       console.log('The Rendering happens next');
       // In case of latency on fetching API
-      return !robots.length ?
+      return isPending ?
           <h1>Loading...</h1> :
           (
               <div className='tc'>
