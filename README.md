@@ -6,7 +6,7 @@ In this project we create some card components with data obtained from an API. T
 
 ## Live Preview
 
-[RoboFriends](https://build-6fjf77xzd.now.sh/)
+[RoboFriends](https://build-bj4hnc96l.now.sh/)
 
 ## Available Scripts
 
